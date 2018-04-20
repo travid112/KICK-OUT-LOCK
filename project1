@@ -1,0 +1,55 @@
+#include <SoftwareSerial.h>
+enum
+{
+  ESPRX=2,
+  ESPTX,
+  BLUERX,
+  BLUETX,
+  LED_GREEN,
+  LED_BLUE,
+  SENSOR_POSITION,
+  BUTTON,
+  RELAY,
+  LED_RED
+}arduino;
+SoftwareSerial Bluetooth (BLUERX, BLUETX); // RX, TX 10,11
+SoftwareSerial Wifi (ESPRX, ESPTX); // RX, TX
+
+void setup() 
+{
+  Bluetooth.begin(9600);
+  Wifi.begin(9600);
+  pinMode(SENSOR_POSITION, INPUT);
+  pinMode(BUTTON, INPUT_PULLUP);
+  pinMode(RELAY, OUTPUT);
+  pinMode(LED_BLUE, OUTPUT);
+  pinMode(LED_GREEN, OUTPUT);
+  pinMode(LED_RED, OUTPUT);
+}
+
+void loop() 
+{
+  if(!digitalRead(BUTTON))
+  {
+    digitalWrite(RELAY,HIGH);
+    digitalWrite(LED_BLUE,HIGH);
+    digitalWrite(LED_GREEN,HIGH);
+    digitalWrite(LED_RED,HIGH);
+  }
+  else
+  {
+    digitalWrite(RELAY,LOW);
+    digitalWrite(LED_BLUE,LOW);
+    digitalWrite(LED_GREEN,LOW);
+    digitalWrite(LED_RED,LOW);
+  }
+   if (Serial.available() > 0) 
+  {
+    Bluetooth.print(Serial.read());
+  }
+  if (Bluetooth.available() > 0) 
+  {
+    Serial.print(Bluetooth.read());
+  }
+
+}
