@@ -1,0 +1,18 @@
+const int infrarrojo = 7;     // the number of the pushbutton pin
+const int ledPin =  6;      // the number of the LED pin
+int buttonState = 0;         // variable for reading the pushbutton status
+
+void setup() {
+  pinMode(ledPin, OUTPUT);      
+  pinMode(infrarrojo, INPUT_PULLUP);     
+}
+
+void loop(){
+  buttonState = digitalRead(infrarrojo);
+  if (buttonState == HIGH) {      
+    digitalWrite(ledPin, HIGH);  
+  } 
+  else {
+    digitalWrite(ledPin, LOW); 
+  }
+}
